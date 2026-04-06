@@ -1,169 +1,280 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SkipIT</title>
-
-<style>
-body {
-  margin: 0;
-  background: black;
-  font-family: Arial, sans-serif;
-  color: white;
-}
-
-.header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  background: black;
-  z-index: 10;
-}
-
-.logo {
-  font-weight: bold;
-}
-
-.upload {
-  position: fixed;
-  top: 50px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  background: black;
-  padding: 10px;
-  z-index: 10;
-}
-
-input {
-  padding: 10px;
-  width: 60%;
-  border-radius: 20px;
-  border: none;
-}
-
-button {
-  padding: 10px 15px;
-  border-radius: 20px;
-  border: none;
-  background: red;
-  color: white;
-  cursor: pointer;
-}
-
-.feed {
-  margin-top: 120px;
-}
-
-.video-card {
-  position: relative;
-  height: 100vh;
-}
-
-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.right-panel {
-  position: absolute;
-  right: 10px;
-  bottom: 80px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
-}
-
-.icon {
-  text-align: center;
-  font-size: 18px;
-}
-
-.bottom-bar {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding: 10px;
-  background: linear-gradient(transparent, black);
-}
-
-.title {
-  font-weight: bold;
-}
-
-</style>
-</head>
-<body>
-
-<div class="header">
-  <div class="logo">SkipIT</div>
-  <div>🔍</div>
-</div>
-
-<div class="upload">
-  <input id="url" placeholder="Paste video URL">
-  <button onclick="addVideo()">Post</button>
-</div>
-
-<div class="feed" id="feed"></div>
-
-<script>
-let videos = [];
-
-function addVideo() {
-  const url = document.getElementById("url").value.trim();
-
-  if (!url) {
-    alert("Paste a video link");
-    return;
-  }
-
-  videos.unshift({ id: Date.now(), url, likes: 0 });
-  document.getElementById("url").value = "";
-  render();
-}
-
-function likeVideo(id) {
-  videos = videos.map(v => {
-    if (v.id === id) v.likes++;
-    return v;
-  });
-  render();
-}
-
-function render() {
-  const feed = document.getElementById("feed");
-  feed.innerHTML = "";
-
-  videos.forEach(video => {
-    const div = document.createElement("div");
-    div.className = "video-card";
-
-    div.innerHTML = `
-      <video src="${video.url}" autoplay loop muted playsinline></video>
-
-      <div class="right-panel">
-        <div class="icon" onclick="likeVideo(${video.id})">👍<br>${video.likes}</div>
-        <div class="icon">💬</div>
-        <div class="icon">↗️</div>
-      </div>
-
-      <div class="bottom-bar">
-        <div class="title">@user • Cool video</div>
-      </div>
-    `;
-
-    feed.appendChild(div);
-  });
-}
-</script>
-
-</body>
-</html>
+1	<!DOCTYPE html>
+     2	<html lang="pl">
+     3	<head>
+     4	<meta charset="UTF-8">
+     5	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+     6	<title>Adam3D Shop</title>
+     7	<style>
+     8	  :root {
+     9	    --bg: #020b23;
+    10	    --panel: #071433;
+    11	    --panel-2: #081a40;
+    12	    --text: #f8f9ff;
+    13	    --muted: #8ca6d9;
+    14	    --primary: #3f8cff;
+    15	    --border: #1a2f5b;
+    16	  }
+    17	
+    18	  * { box-sizing: border-box; }
+    19	
+    20	  body {
+    21	    margin: 0;
+    22	    font-family: "Segoe UI", Arial, sans-serif;
+    23	    color: var(--text);
+    24	    background: radial-gradient(circle at top, #082052 0%, var(--bg) 55%);
+    25	  }
+    26	
+    27	  .container {
+    28	    width: min(1280px, 94vw);
+    29	    margin: 0 auto;
+    30	  }
+    31	
+    32	  .header {
+    33	    position: sticky;
+    34	    top: 0;
+    35	    z-index: 40;
+    36	    background: rgba(2, 11, 35, 0.95);
+    37	    border-bottom: 1px solid var(--border);
+    38	    backdrop-filter: blur(8px);
+    39	  }
+    40	
+    41	  .header-inner {
+    42	    display: flex;
+    43	    align-items: center;
+    44	    justify-content: space-between;
+    45	    min-height: 82px;
+    46	  }
+    47	
+    48	  .brand {
+    49	    display: flex;
+    50	    align-items: center;
+    51	    gap: 12px;
+    52	    font-size: 40px;
+    53	    font-weight: 800;
+    54	  }
+    55	
+    56	  .brand span { font-size: 38px; }
+    57	  .brand .accent { color: var(--primary); }
+    58	
+    59	  .menu {
+    60	    display: flex;
+    61	    gap: 12px;
+    62	    align-items: center;
+    63	  }
+    64	
+    65	  .menu button {
+    66	    background: transparent;
+    67	    color: var(--muted);
+    68	    border: none;
+    69	    font-size: 32px;
+    70	    padding: 14px 28px;
+    71	    border-radius: 18px;
+    72	    cursor: pointer;
+    73	    font-weight: 600;
+    74	  }
+    75	
+    76	  .menu button.active {
+    77	    color: var(--primary);
+    78	    background: #0a224f;
+    79	  }
+    80	
+    81	  .cart-btn {
+    82	    font-size: 38px;
+    83	    background: transparent;
+    84	    color: var(--text);
+    85	    border: none;
+    86	    cursor: pointer;
+    87	    position: relative;
+    88	  }
+    89	
+    90	  .cart-count {
+    91	    position: absolute;
+    92	    right: -8px;
+    93	    top: -6px;
+    94	    min-width: 28px;
+    95	    height: 28px;
+    96	    border-radius: 999px;
+    97	    background: var(--primary);
+    98	    color: #00122e;
+    99	    display: grid;
+   100	    place-items: center;
+   101	    font-size: 18px;
+   102	    font-weight: 700;
+   103	    padding: 0 6px;
+   104	  }
+   105	
+   106	  main { padding: 36px 0 60px; }
+   107	
+   108	  section { display: none; }
+   109	  section.active { display: block; }
+   110	
+   111	  .hero {
+   112	    padding: 36px;
+   113	    border: 1px solid var(--border);
+   114	    border-radius: 24px;
+   115	    min-height: 520px;
+   116	    background:
+   117	      linear-gradient(to right, rgba(2, 11, 35, 0.95) 30%, rgba(2, 11, 35, 0.4) 70%),
+   118	      url("https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=1600&q=80") center/cover;
+   119	  }
+   120	
+   121	  .badge {
+   122	    display: inline-flex;
+   123	    align-items: center;
+   124	    gap: 8px;
+   125	    border: 1px solid #234c90;
+   126	    border-radius: 999px;
+   127	    padding: 10px 18px;
+   128	    color: var(--primary);
+   129	    font-size: 24px;
+   130	    background: rgba(11, 44, 102, 0.25);
+   131	  }
+   132	
+   133	  h1 {
+   134	    font-size: clamp(48px, 7vw, 98px);
+   135	    line-height: 1.05;
+   136	    margin: 28px 0 20px;
+   137	    max-width: 900px;
+   138	  }
+   139	
+   140	  h1 .accent { color: var(--primary); }
+   141	
+   142	  .lead {
+   143	    color: var(--muted);
+   144	    font-size: clamp(22px, 2.2vw, 38px);
+   145	    max-width: 780px;
+   146	    line-height: 1.45;
+   147	  }
+   148	
+   149	  .actions {
+   150	    margin-top: 34px;
+   151	    display: flex;
+   152	    gap: 16px;
+   153	    flex-wrap: wrap;
+   154	  }
+   155	
+   156	  .btn {
+   157	    border-radius: 16px;
+   158	    border: 1px solid transparent;
+   159	    padding: 16px 28px;
+   160	    font-weight: 700;
+   161	    font-size: 28px;
+   162	    cursor: pointer;
+   163	  }
+   164	
+   165	  .btn-primary {
+   166	    background: var(--primary);
+   167	    color: #00122f;
+   168	  }
+   169	
+   170	  .btn-outline {
+   171	    background: transparent;
+   172	    border-color: var(--border);
+   173	    color: var(--text);
+   174	  }
+   175	
+   176	  .why {
+   177	    margin-top: 42px;
+   178	    text-align: center;
+   179	  }
+   180	
+   181	  .why h2,
+   182	  .products h2,
+   183	  .cart h2,
+   184	  .about h2 {
+   185	    font-size: clamp(42px, 5vw, 70px);
+   186	    margin: 0;
+   187	  }
+   188	
+   189	  .why h2 .accent,
+   190	  .products h2 .accent,
+   191	  .about h2 .accent {
+   192	    color: var(--primary);
+   193	  }
+   194	
+   195	  .subtext {
+   196	    color: var(--muted);
+   197	    font-size: 34px;
+   198	    max-width: 900px;
+   199	    margin: 18px auto 0;
+   200	    line-height: 1.35;
+   201	  }
+   202	
+   203	  .grid {
+   204	    display: grid;
+   205	    grid-template-columns: repeat(4, minmax(0, 1fr));
+   206	    gap: 18px;
+   207	    margin-top: 36px;
+   208	  }
+   209	
+   210	  .card {
+   211	    background: rgba(9, 24, 59, 0.75);
+   212	    border: 1px solid var(--border);
+   213	    border-radius: 18px;
+   214	    padding: 26px;
+   215	  }
+   216	
+   217	  .icon-badge {
+   218	    width: 76px;
+   219	    height: 76px;
+   220	    border-radius: 18px;
+   221	    background: #0f2a5f;
+   222	    display: grid;
+   223	    place-items: center;
+   224	    font-size: 36px;
+   225	    margin: 0 auto 22px;
+   226	    color: var(--primary);
+   227	  }
+   228	
+   229	  .card h3 {
+   230	    margin: 0;
+   231	    text-align: center;
+   232	    font-size: 34px;
+   233	  }
+   234	
+   235	  .card p {
+   236	    margin: 14px 0 0;
+   237	    text-align: center;
+   238	    color: var(--muted);
+   239	    font-size: 30px;
+   240	    line-height: 1.35;
+   241	  }
+   242	
+   243	  .products .search {
+   244	    margin-top: 26px;
+   245	    width: 100%;
+   246	    border: 1px solid var(--border);
+   247	    border-radius: 14px;
+   248	    background: rgba(8, 22, 54, 0.9);
+   249	    color: var(--text);
+   250	    font-size: 30px;
+   251	    padding: 16px 20px;
+   252	  }
+   253	
+   254	  .product-grid {
+   255	    display: grid;
+   256	    grid-template-columns: repeat(3, minmax(0, 1fr));
+   257	    gap: 18px;
+   258	    margin-top: 22px;
+   259	  }
+   260	
+   261	  .product {
+   262	    background: rgba(9, 24, 59, 0.8);
+   263	    border: 1px solid var(--border);
+   264	    border-radius: 18px;
+   265	    padding: 24px;
+   266	    min-height: 220px;
+   267	    display: flex;
+   268	    flex-direction: column;
+   269	    justify-content: space-between;
+   270	  }
+   271	
+   272	  .chip {
+   273	    display: inline-block;
+   274	    padding: 8px 14px;
+   275	    border-radius: 999px;
+   276	    background: #3e8dff;
+   277	    color: #001533;
+   278	    font-weight: 700;
+   279	    font-size: 20px;
+   280	  }
